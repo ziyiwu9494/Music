@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.karlotoy.perfectune.instance.PerfectTune;
 
 public class MainActivity extends AppCompatActivity {
 

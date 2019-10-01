@@ -5,10 +5,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
-import com.karlotoy.perfectune.instance.PerfectTune;
+import com.example.music.generator.Generator;
+
 
 public class PlayerActivity extends Activity {
-    final PerfectTune perfectTune = new PerfectTune();
+    final Generator perfectTune = new Generator();
     DrawView drawView;
 
     @Override
@@ -23,13 +24,16 @@ public class PlayerActivity extends Activity {
     public boolean onTouchEvent(MotionEvent event) {
 
         int y = (int) event.getY();
+        int x = (int) event.getX();
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 perfectTune.setTuneFreq(y);
+                perfectTune.setTuneAmp(x*30);
+                System.out.println(x);
                 perfectTune.playTune();
-                System.out.println(y);
             case MotionEvent.ACTION_MOVE:
                 perfectTune.setTuneFreq(y);
+                perfectTune.setTuneAmp(x*30);
                 perfectTune.playTune();
                 break;
             case MotionEvent.ACTION_UP:
