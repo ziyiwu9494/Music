@@ -1,5 +1,6 @@
 package com.example.music;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,35 +10,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 import com.karlotoy.perfectune.instance.PerfectTune;
 
 public class MainActivity extends AppCompatActivity {
-    final PerfectTune perfectTune = new PerfectTune();
-    DrawView drawView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        drawView = new DrawView(this);
-        drawView.setBackgroundColor(Color.WHITE);
-        setContentView(drawView);
+        setContentView(R.layout.activity_main);
+        Button playButton = this.findViewById(R.id.button);
+        playButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(MainActivity.this, PlayerActivity.class));
+            }
+        });
     }
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int y = (int) event.getY();
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                perfectTune.setTuneFreq(y);
-                perfectTune.playTune();
-            case MotionEvent.ACTION_MOVE:
-                perfectTune.setTuneFreq(y);
-                perfectTune.playTune();
-                break;
-            case MotionEvent.ACTION_UP:
-                perfectTune.stopTune();
-                break;
-        }
-        return false;
-    }
+
 
 }
