@@ -3,13 +3,14 @@ package com.example.music.generator;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.view.SurfaceHolder;
 
 class GeneratorThread extends Thread {
 
     private boolean isRunning;
     private int sr = 44100;
     private double tuneFreq = 440;
-    private int tuneAmp = 10000;
+    private float tuneAmp = 1;
 
     @Override
     public void run() {
@@ -26,20 +27,33 @@ class GeneratorThread extends Thread {
         short samples[] = new short[buffsize];
         double twopi = 8.*Math.atan(1.);
         double ph = 0.0;
-
         // start audio
-        audioTrack.play();
-
+        if(!(audioTrack.getPlayState() == AudioTrack.PLAYSTATE_PLAYING)) {
+            audioTrack.play();
+        }
         // synthesis loop
-        while(isRunning){
+        while(true){
             double fr = tuneFreq;
-            double amp = tuneAmp;
+            float amp = tuneAmp;
+            float maxVolume = AudioTrack.getMaxVolume();
+            boolean breakFlag = false;
+            audioTrack.setVolume(amp*maxVolume);
             for(int i=0; i < buffsize; i++){
-                samples[i] = (short) (amp*Math.sin(ph));
+                samples[i] = (short) (Short.MAX_VALUE*Math.sin(ph));
                 ph += twopi*fr/sr;
             }
+            if(!isRunning){
+                breakFlag = true;
+                for(int i = 0; i < buffsize; i++){
+                    samples[i]*= 1-(i/buffsize);
+                }
+            }
             audioTrack.write(samples, 0, buffsize);
+
+
+            if(breakFlag)break;
         }
+
         audioTrack.stop();
         audioTrack.release();
     }
@@ -52,7 +66,7 @@ class GeneratorThread extends Thread {
         this.tuneFreq = tuneFreq;
     }
 
-    void setAmp(int tuneAmp){
+    void setAmp(float tuneAmp){
         this.tuneAmp = tuneAmp;
     }
 

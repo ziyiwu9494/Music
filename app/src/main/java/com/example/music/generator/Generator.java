@@ -4,7 +4,7 @@ public class Generator{
 
     private GeneratorThread generatorThread;
     private double tuneFreq = 0f;
-    private int tuneAmp = 10000;
+    private float tuneAmp = 0;
 
     public Generator playTune(){
         if(generatorThread == null){
@@ -22,7 +22,7 @@ public class Generator{
         }
     }
 
-    public void setTuneAmp(int tuneAmp){
+    public void setTuneAmp(float tuneAmp){
         this.tuneAmp = tuneAmp;
         if(generatorThread != null){
             generatorThread.setAmp(tuneAmp);
