@@ -12,6 +12,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+/*Implement 4 objects:
+TODO: work with file system to store game and composed files. MIDI format?
+swype rhythm game: generate points that you have to swipe across to the beat of a given piece. Some pre-programmed, others you can build with the composition tool.
+TODO:
+composition tool: input something (string of characters representing pitches and time and volume?) and use it to generate a piece of music. Potentially create a better UI for this.
+TODO:
+Visualizer: Play a piece of music and show all the pitches and amplitudes using the Drawview.
+Something that converts singing into a manipulable data file?
+
+ */
 
 public class MainActivity extends AppCompatActivity {
 

@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.view.SurfaceHolder;
 
+
 class GeneratorThread extends Thread {
 
     private boolean isRunning;
